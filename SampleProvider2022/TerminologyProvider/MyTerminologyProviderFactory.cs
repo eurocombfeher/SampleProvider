@@ -10,7 +10,11 @@ namespace SampleProvider
     {
         public ITerminologyProvider CreateTerminologyProvider(Uri terminologyProviderUri, ITerminologyProviderCredentialStore credentials)
         {
-            return new MyTerminologyProvider(terminologyProviderUri);
+	        // TODO Check that your credentials or other criteria are still valid from the criteria persisted in the Uri
+			// If not valid then throw an exception here (e.g. failed login etc...)
+			
+
+			return new MyTerminologyProvider(terminologyProviderUri);
         }
 
         public bool SupportsTerminologyProviderUri(Uri terminologyProviderUri)

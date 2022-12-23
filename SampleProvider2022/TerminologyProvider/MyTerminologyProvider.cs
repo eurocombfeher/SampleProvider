@@ -12,7 +12,7 @@ namespace SampleProvider
     {
         private IDefinition _definition;
         private string _name;
-        private static bool _initialized;
+       
 
         public override string Name => _name;
         public override string Description => "Sample terminology provider";
@@ -24,30 +24,17 @@ namespace SampleProvider
             Uri = uri;
             _definition = new Definition(new List<IDescriptiveField>(), new List<IDefinitionLanguage>());
             _name = $"SAMPLE (SOME-ID/SERVER)";
-            TryLogin();
-            Status = new TerminologyProviderStatus(true);
-        }
 
-        private void TryLogin()
-        {
-            if (_initialized) return;
-            //if the data is not initialized we open a (blocking) window in which the user can login (like Remote MT termbase if not available), then on window close continue init
-            var successfulLogin = ShowConfiguration();
-            _initialized = successfulLogin;
-        }
-
-        private bool ShowConfiguration()
-        {
-            var window = new SampleConfig();
-            ElementHost.EnableModelessKeyboardInterop(window);
-            window.ShowDialog();
-            return true;
-        }
+			// TODO: this can't work here; the UI is only applicable from the WinFormsUI implementation.
+			// Recommend you move settings, including login to your ITerminologyProviderWinFormsUI implementation
+			//TryLogin();
 
 
+			// TODO: this type of logic should be injected from your factory and WinFormsUI implementations
+			//Status = new TerminologyProviderStatus(true);
+		}
 
-
-        public override IEntry GetEntry(int id)
+		public override IEntry GetEntry(int id)
         {
             return entries.FirstOrDefault(x => x.Id == id);
         }
