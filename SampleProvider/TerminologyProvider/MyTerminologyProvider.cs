@@ -12,7 +12,7 @@ namespace SampleProvider
     {
         private IDefinition _definition;
         private string _name;
-        private static bool _initialized;
+        //private static bool _initialized;
 
         public override string Name => _name;
         public override string Description => "Sample terminology provider";
@@ -24,27 +24,9 @@ namespace SampleProvider
             Uri = uri;
             _definition = new Definition(new List<IDescriptiveField>(), new List<IDefinitionLanguage>());
             _name = $"SAMPLE (SOME-ID/SERVER)";
-            TryLogin();
+            //TryLogin();
             Status = new TerminologyProviderStatus(true);
         }
-
-        private void TryLogin()
-        {
-            if (_initialized) return;
-            //if the data is not initialized we open a (blocking) window in which the user can login (like Remote MT termbase if not available), then on window close continue init
-            var successfulLogin = ShowConfiguration();
-            _initialized = successfulLogin;
-        }
-
-        private bool ShowConfiguration()
-        {
-            var window = new SampleConfig();
-            ElementHost.EnableModelessKeyboardInterop(window);
-            window.ShowDialog();
-            return true;
-        }
-
-
 
 
         public override IEntry GetEntry(int id)
