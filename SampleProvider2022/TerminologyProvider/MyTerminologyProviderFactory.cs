@@ -1,5 +1,6 @@
 ﻿using Sdl.Terminology.TerminologyProvider.Core;
 using System;
+using System.Threading;
 using System.Windows.Forms.Integration;
 using SampleProvider.Views;
 
@@ -28,9 +29,19 @@ namespace SampleProvider
 
         private bool ShowConfiguration()
         {
-            var window = new SampleConfig();
-            ElementHost.EnableModelessKeyboardInterop(window);
-            window.ShowDialog();
+            Thread thread = new Thread(() =>
+            {
+                var window = new SampleConfig();
+                ElementHost.EnableModelessKeyboardInterop(window);
+                window.ShowDialog();
+                
+            });
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+            thread.Join();
+            //var window = new SampleConfig();
+            //ElementHost.EnableModelessKeyboardInterop(window);
+            //window.ShowDialog();
             return true;
         }
 
