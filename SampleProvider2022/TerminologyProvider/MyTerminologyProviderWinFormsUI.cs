@@ -16,7 +16,8 @@ namespace SampleProvider
 
         public ITerminologyProvider[] Browse(IWin32Window owner, ITerminologyProviderCredentialStore credentialStore)
         {
-            var uri = new Uri($"very.sample://SOME-URL#####SOME-NAME####SUB-NAME");
+            //Ensuring with GUID we have a unique value for each instance
+            var uri = new Uri($"very.sample://sample.at/endpoint#####Some-Name#####" + Guid.NewGuid());
             var provider = new MyTerminologyProvider(uri);
             return new ITerminologyProvider[] { provider };
         }

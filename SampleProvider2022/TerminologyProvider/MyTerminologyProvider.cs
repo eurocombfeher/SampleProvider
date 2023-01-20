@@ -10,20 +10,21 @@ namespace SampleProvider
 {
     public sealed class MyTerminologyProvider : AbstractTerminologyProvider
     {
-        private IDefinition _definition;
-        private string _name;
         //private static bool _initialized;
 
-        public override string Name => _name;
+        public override string Name { get; }
         public override string Description => "Sample terminology provider";
         public override Uri Uri { get; }
-        public override IDefinition Definition => _definition;
+        public override IDefinition Definition { get; }
 
         public MyTerminologyProvider(Uri uri)
         {
             Uri = uri;
-            _definition = new Definition(new List<IDescriptiveField>(), new List<IDefinitionLanguage>());
-            _name = $"SAMPLE (SOME-ID/SERVER)";
+            Definition = new Definition(new List<IDescriptiveField>(), new List<IDefinitionLanguage>());
+            var data = uri.ToString().Split(new[] { "//" }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+            var datas = data?.Split(new[] { "#####" }, StringSplitOptions.RemoveEmptyEntries);
+            var suffix = datas == null || datas.Length < 3 ? "" : $" ({datas[1]}/{datas[2]})";
+            Name = "Sample" + suffix;//uri.AbsoluteUri.Substring("very.sample://".Length);
             //TryLogin(); //moved to factory
             Status = new TerminologyProviderStatus(true);
         }

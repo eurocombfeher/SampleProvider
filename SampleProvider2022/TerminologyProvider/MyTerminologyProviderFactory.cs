@@ -14,7 +14,7 @@ namespace SampleProvider
         private static bool _initialized;
         public ITerminologyProvider CreateTerminologyProvider(Uri terminologyProviderUri, ITerminologyProviderCredentialStore credentials)
         {
-            TryLogin();
+            //TryLogin();
             return new MyTerminologyProvider(terminologyProviderUri);
         }
 
@@ -50,5 +50,6 @@ namespace SampleProvider
         {
             return terminologyProviderUri.AbsoluteUri.StartsWith("very.sample");
         }
+
     }
 }
